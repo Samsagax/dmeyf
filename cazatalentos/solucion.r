@@ -48,6 +48,35 @@ gimnasio_veredicto  <- function( pid )
 }
 #------------------------------------------------------------------------------
 
+# Calculo parámetros de los jugadores seleccionados de todo el grupo
+# y excluyendo al lider
+planilla_parametros  <- function( planilla_jugadores, ids )
+{
+  leader_pos <- planilla_jugadores[ ids, which.max(promedio_general) ]
+  leader <- planilla_jugadores[leader_pos, id]
+  the_rest <- ids[ids != leader]
+
+  mean <- planilla_jugadores[ids, mean(promedio_general)]
+  sd <- planilla_jugadores[ids, sd(promedio_general)]
+  max <- planilla_jugadores[ids, max(promedio_general)]
+  min <- planilla_jugadores[ids, min(promedio_general)]
+
+  mean_rest <- planilla_jugadores[the_rest, mean(promedio_general)]
+  sd_rest <- planilla_jugadores[the_rest, sd(promedio_general)]
+  max_rest <- planilla_jugadores[the_rest, max(promedio_general, max)]
+  min_rest <- planilla_jugadores[the_rest, min(promedio_general, min)]
+
+  return(
+         list("mean"=mean,
+              "sd"=sd,
+              "max"=max,
+              "min"=min,
+              "mean_rest"=mean_rest,
+              "sd_rest"=sd_rest
+         )
+  )
+}
+
 Estrategia_D <- function( verbose = FALSE )
 {
   #Estrategia
@@ -65,11 +94,6 @@ Estrategia_D <- function( verbose = FALSE )
   #Ronda 1  -------- PRECALENTAMIENTO (COLD BOOT) ---------------------
   #tiran los 100 jugadores es decir 1:100  XX  tiros libres cada uno
   # Grupos de a 2
-  per_group = 2
-  for (iter in 1:(100/per_group))
-  {
-    planilla_cazatalentos[c(((iter-1)*(per_group)+1):(iter*(per_group))), grupo := iter]
-  }
   ids_juegan_coldboot  <- 1:100   #los jugadores que participan en la ronda,
 
   coldboot_rounds <- 60
@@ -89,25 +113,21 @@ Estrategia_D <- function( verbose = FALSE )
   for ( iter in 1:num_rounds )
   {
     planilla_cazatalentos[ids_last_round, promedio_general := aciertos_total / tiros_total]
-    planilla_cazatalentos[ids_last_round, sd_grupal := sd(promedio_general), by=grupo]
-    planilla_cazatalentos[ids_last_round, promedio_grupal := aciertos_total / tiros_total, by=grupo]
 
+    params <- planilla_parametros(planilla_cazatalentos, ids_last_round)
     num_sd = 3.75
     if (iter >= 2)
     {
       num_sd = 2
     }
 
-    promedio_corte <- planilla_cazatalentos[ ids_last_round, max(promedio_general) - num_sd*sd(promedio_general)]
-    #promedio_corte <- planilla_cazatalentos[ ids_last_round, max(promedio_grupal) - 3.6*sd(promedio_grupal)]
-    #promedio_corte <- planilla_cazatalentos[ ids_last_round, max(promedio_general) - 3.6*sd(promedio_general)]
+    promedio_corte <- params$max - num_sd*params$sd_rest
+
     if (verbose) {
       cat("Iteración ", iter, "Promedio general", promedio_corte, "\n")
       cat("Iteración ", iter, "Promedio máximo", planilla_cazatalentos[ids_last_round, max(promedio_general)], "\n")
     }
 
-    #ids_next_round <- planilla_cazatalentos[ ids_last_round ][ sd_grupal >= sd_grupal_corte, id]
-    #ids_next_round <- planilla_cazatalentos[ ids_last_round ][ promedio_grupal >= promedio_corte, id]
     ids_next_round <- planilla_cazatalentos[ ids_last_round ][ promedio_general >= promedio_corte, id]
 
     if (length(ids_next_round) == 0)
@@ -122,14 +142,17 @@ Estrategia_D <- function( verbose = FALSE )
     # Si me voy a pasar, corto el experimento
     if (GLOBAL_tiros_total + length(ids <- ids_next_round) * rounds_step > 15000)
     {
-      cat("Me paso de la cantidad en iteración ",iter, ", corto el experimento!\n")
+      if (verbose) {
+        cat("Me paso de la cantidad en iteración ",iter, ", corto el experimento!\n")
+      }
       break
     }
 
-    #if (verbose) {
+    if (verbose) {
         cat("Total jugadores en ronda ", iter, " = ", length(ids_next_round),
+            ", promedio máx = ", planilla_cazatalentos[ids_next_round, max(promedio_general)],
             ", tiros = ", planilla_cazatalentos[ids_next_round, max(tiros_total)] + rounds_step, "\n")
-    #}
+    }
 
     cumulativo_last_round <- planilla_cazatalentos[ ids_next_round, aciertos_total ]
 
@@ -165,7 +188,7 @@ set.seed( 102191 )  #debe ir una sola vez, ANTES de los experimentos
 
 tabla_veredictos  <- data.table(  tiros_total=integer(),  acierto=integer() )
 
-for( experimento  in  1:1000 )
+for( experimento  in  1:10000 )
 {
   if( experimento %% 100 == 0 )  cat( experimento, " ")  #desprolijo, pero es para saber por donde voy
 
