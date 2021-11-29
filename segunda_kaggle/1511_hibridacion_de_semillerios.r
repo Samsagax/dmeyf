@@ -12,7 +12,7 @@ setwd( "~/buckets/b1/" )
 
 #notar que son de experimentos distintos, y uno sumo 200 semillas y el otro apenas 70
 arch1  <- "./kaggle/E4039/semillerio_200_14000.csv" # Dataset v096
-arch2  <- "./kaggle/E4041/meseta/E4041_s1431_200_14000.csv" # Dataset v121
+arch2  <- "./kaggle/E4043/meseta/E4043_s1431_200_14000.csv" # Dataset v096 tiempo largo
 
 
 kexperimento <-  NA
