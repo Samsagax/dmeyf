@@ -13,7 +13,7 @@ require("lightgbm")
 
 setwd("~/buckets/b1/")
 
-karch_dataset   <-  "./datasets/dataset_epic_full_v096.csv.gz"
+karch_dataset   <-  "./datasets/dataset_epic_full_v121.csv.gz"
 ksalida  <- "semillerio"
 
 kexperimento  <- NA
@@ -25,15 +25,15 @@ kcantidad_semillas  <- 200
 #ATENCION
 #aqui deben ir los mejores valores que salieron de la optimizacion bayesiana
 x  <- list()
-x$gleaf_size   <- 88.44999
-x$gnum_leaves  <- 0.9275848
-x$learning_rate <- 0.1592769
-x$feature_fraction <- 0.7635271
-x$lambda_l1  <- 17.55596
-x$lambda_l2  <- 135.5717
-x$max_bin  <- 78
-x$num_iterations  <- 193
-x$pos_ratio  <- 0.04051283
+x$gleaf_size   <- 74.27254
+x$gnum_leaves  <- 0.7596534
+x$learning_rate <- 0.02052687
+x$feature_fraction <- 0.405307
+x$lambda_l1  <- 6.135071
+x$lambda_l2  <- 53.73339
+x$max_bin  <- 12
+x$num_iterations  <- 1055
+x$pos_ratio  <- 0.03482212
 
 
 #------------------------------------------------------------------------------
