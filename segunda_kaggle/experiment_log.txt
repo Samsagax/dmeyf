@@ -1,93 +1,116 @@
 E5000:
- - dataset: V100
+ - dataset: V100. Dataset base, sin palancas.
  - train: 201801 - 202012
  - apply: 202101
  - obs: borked
+ - Public: 12.27
+ - Script: 823
 
 E5002:
- - dataset: V100
+ - dataset: V100. Dataset base, sin palancas.
  - train: 202001 - 202012
  - apply: 202101
  - obs: borked
+ - Public: 18.12
+ - Dio peor en la iteracion 162: 17.33
+ - Script: 823
 
 E4000:
- - dataset: V90
+ - dataset: V90. Levanta lag1, Corrige el dataset con las variables que estan rotas. Imputa NA.
  - train: 202003 - 202010
  - apply: 202011
  - obs: no genera modelitos utiles (borked)
+ - Script: 823
 
 E4001:
- - dataset: V90
+ - dataset: V90. Levanta lag1, Corrige el dataset con las variables que estan rotas. Imputa NA.
  - train: 201907 - 202002
  - apply: 202011
  - obs: no genera modelitos utiles (borked)
+ - Script: 823
 
 E4002:
- - dataset: V90
+ - dataset: V90. Levanta lag1, Corrige el dataset con las variables que estan rotas. Imputa NA.
  - train: 201901 - 202010
  - apply: 202011
- - obs: no genera modelitos utiles (borked)
+ - obs: no genera modelitos utiles (borked). Es el horizonte temporal que mejor da.
+ - Script: 823
 
 E4006:
- - dataset: V90
+ - dataset: V90. Levanta lag1, Corrige el dataset con las variables que estan rotas. Imputa NA.
  - apply: 202011
- - obs: semillerío para wilcox sobre parametros de E4000
+ - obs: semillerío para wilcox sobre parametros de E4000. 
+ - Script: 980. Se hace con los tres horizontes temporales para compararlos entre sí.
 
 E4008:
- - dataset: V90
+ - dataset: V90. Levanta lag1, Corrige el dataset con las variables que estan rotas. Imputa NA.
  - apply: 202011
  - obs: semillerío para wilcox sobre parametros de E4001
- - conclusiones: despues de un text de wilcox es mejor E4000 para predecir
+ - conclusiones: despues de un text de wilcox es mejor E4000 para predecir. Se compara pandemia vs pre pandemia.
 
 E4009:
- - dataset: V90
+ - dataset: V90. Levanta lag1, Corrige el dataset con las variables que estan rotas. Imputa NA.
  - apply: 202101
  - train: 201901 - 202010
  - obs: Generar modelitos de E4002
+ - Public: 18.78
 
 E4010:
  - dataset: V90
  - apply: 202101
  - train: 202003 - 202010
  - obs: Generar modelitos de E4000
+ - Public: 18.55
 
 E4011:
  - dataset: V90
  - apply: 202101
  - train: 201907 - 202002
  - obs: Generar modelitos de E4001
+ - Public: 14.29
 
-E40013:
+E4013:
  - dataset: V90
  - apply: 202011
- - obs: semillerío para wilcox sobre parametros de E4002
+ - obs: semillerío para wilcox sobre parametros de E4002. Compara contra E4000.
  - conclusiones: despues de un text de wilcox es mejor E4002 para predecir
+
+E1013:
+ - dataset: V101. Levanta corregir, lag y delta 1, lag y delta 3, tendencias, canaritos, feature engineering primera competencia. Hiperparámetros parecidos a los economistas no.
+ - apply: 202101
+ - train: 202003 - 202010
+ - Public: 21.53
+ - Script: 951
 
 E4015:
  - dataset: V100 (stacking)
  - apply: 202101
  - train: stacking de modelitos hasta ahora
+ - 4009, 4010, 4011, 5000 y 5002.
+ - Script: 847
+ - Tenía pocas iteraciones del 4009. Lo importante fue el feature importance. Daba que el 4009 era el mas importante.
 
 E4016:
- - dataset: V101
+ - dataset: V101. Corregir + feature engineering primera competencia. Deudas totales: saldos de tarjetas, prestamos. Ratio de deudas: deuda/saldo en cuenta. Suma de transacciones de todos los productos. Ratio de payroll en cantidad sobre totales. Saldo total/Transacciones totales. Descubierto sobre la edad del cliente. Ratio de uso de la TD. Suma y ratios de ingresos al banco. Creación de variables de interaccion: Dividir las variables por las mas importantes (sale de la kaggle anterior).
  - apply: 202101
  - train: 201810 - 202010
  - obs: se agregan parámetros de regularización lambda y ajustes mínimos sobre learning rate (BO muy cerca del lower bound)
 
 E4017:
- - dataset: V91
+ - dataset: V91. Dataset corregido, lag y delta 1, lag y delta 2 y canaritos
  - apply: 202101
  - train: 202003 - 202010
  - obs: entrenar sobre meses de pandemia con regularización
+ - Script: 951
 
 E4018:
- - dataset: V92
+ - dataset: V92. Dataset corregido, lag y delta 1, lag y delta 2, lag y delta 3 y canaritos
  - apply: 202101
  - train: 202003 - 202010
- - obs: dataset muy grande, tarda mucho en entrenar.
+ - obs: dataset muy grande, tarda mucho en entrenar. Se corta la prueba.
 
 E4019:
- - dataset: V093
+ - dataset: V093. Dataset corregido, lag y delta 1, lag y delta 3 y canaritos
  - apply: 202101
  - train: 202003 - 202010
  - obs: deltas de orden 3 sin orden 2.
@@ -100,27 +123,28 @@ E4020:
 
 E4021:
  - dataset: V91
- - apply: 2021
+ - apply: 202011
  - train: 202003 - 202010
- - obs: semillerío para wilcox sobre parametros de E4017 (da mejor delta3 que delta2 y mejor que sin esos)
+ - obs: semillerío para wilcox sobre parametros de E4017 (da mejor delta3 que delta2 y mejor que sin esos, o sea el E4019). Compara contra E4019 u contra 4002.
 
 E4023:
- - dataset: V95
- - apply: 2021
+ - dataset: V95. Delta 1, tendencias. Corregir y canaritos.
+ - apply: 202011
  - train: 202003 - 202010
  - obs: agregadas tendencias con delta1
 
 E4024:
- - dataset: V96
+ - dataset: V96. Delta 1, delta 3, tendencias. Corregir y canaritos.
  - apply: 2021
  - train: 202003 - 202010
  - obs: agregadas tendencias con delta1 y delta3
+ - Public: 20.23
 
 E4025:
  - dataset: V97
  - apply: 2021
  - train: 202003 - 202010
- - obs: tendencias, delta1 y delta3 con feature engineering de la kaggle anterior
+ - obs: tendencias, delta1 y delta3 con feature engineering de la kaggle anterior.
 
 E4026:
  - dataset: V94
@@ -154,16 +178,68 @@ E4030:
  - apply: 202011
  - train: 202003 - 202010
  - obs: semillerio sobre el E4025
- - res: comparado contra tendencias + delta3 da peor con tendencias + delta1 + delta3
+ - res: comparado contra tendencias + delta3 da peor con tendencias + delta1 + delta3. 
+
+CHEQUEO: Se fue tirando Wilcox y el que mejor dio fue el V096.
 
 E4031:
  - dataset: V110
- - apply: 2021
+ - apply: 202101
  - train: 201910 - 202010
- - obs: probando el esquema de cruces de variables con canaritos.
+ - obs: probando el esquema de cruces de variables con canaritos. Prueba no completada.
 
 E4032:
  - dataset: V110 (stacking)
- - apply: 2021
+ - apply: 202101
  - train: 201910 - 202011
- - obs: Stacking de lo que hay hasta ahora
+ - obs: Stacking de lo que hay hasta ahora.
+ - Script: 847.
+ - Public: 18.48.
+
+ E4038:
+ - dataset: lag y delta 1, correccion
+ - apply: 202101
+ - train: 202001 - 202009
+ - obs: Linea base del semillerío. 
+ - Script: 1420-1431.
+ - Public: 21.5.
+
+ E4039:
+ - dataset: V096 
+ - apply: 202101
+ - train: 202001 - 202009
+ - obs: primera prueba con mejor dataset encontrado
+ - Script: 1031.
+ - Public: 22. Conclusión: el paper tenía razon.
+
+  E4041:
+ - dataset: V121. Corregir, nuevas vars Joaco, ranks de variable por mes, lag y delta 1, lag y delta 3, lag y delta 6, tendencia 6, canaritos
+ - apply: 202101
+ - train: 202001 - 202009
+ - obs: Pudimos verificar que hay diferencia significativa entre las distintas semillas. En 150 semillas ya da muy parecido que 200 y en 100 da un poco mas chica. No promedia probabilidades sino el ranking de las probabilidades. De la meseta sale que entre 11000 y 13000 esta el optimo.
+ - Script: 1031.
+ - Public: 21.7.
+
+   E4043:
+ - dataset: V096
+ - apply: 202101
+ - train: 201907 - 202009
+ - obs: 
+ - Script: 1031.
+ - Public: 19.59 en la meseta.
+
+   E6000:
+ - dataset: V096 + 121. Hibridación entre el mejor y segundo mejor.
+ - apply: 202101
+ - train: 202001 - 202009
+ - obs: Hibridación
+ - Script: 1031.
+ - Public: 21.7 en la meseta en 12000.
+
+   E6001:
+ - dataset: V096 + V096 con tiempo largo (201907-202009). Hibridación entre el mejor y segundo mejor.
+ - apply: 202101
+ - train: 202001 - 202009
+ - obs: Hibridación
+ - Script: 1031.
+ - Public: 20.6 en la meseta en 11500.
