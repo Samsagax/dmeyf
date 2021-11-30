@@ -10,9 +10,9 @@ require("yaml")
 
 setwd( "~/buckets/b1/" )
 
-#notar que son de experimentos distintos, y uno sumo 200 semillas y el otro apenas 70
+#notar que son de experimentos distintos, y uno sumo 200 semillas y el otro apenas 40
 arch1  <- "./kaggle/E4039/semillerio_200_14000.csv" # Dataset v096
-arch2  <- "./kaggle/E4043/meseta/E4043_s1431_200_14000.csv" # Dataset v096 tiempo largo
+arch2  <- "./kaggle/E4045/meseta/E4045_s1431_40_14000.csv" # Dataset v121 tiempo largo
 
 
 kexperimento <-  NA
@@ -62,7 +62,7 @@ setorder( modelo1, numero_de_cliente )
 setorder( modelo2, numero_de_cliente )
 
 modelo_nuevo  <- copy(  modelo1[  , c("numero_de_cliente"), with=FALSE ] )
-modelo_nuevo[ , ranking  :=  200*modelo1$ranking + 200*modelo2$ranking ]   #ATENCION  el 200 es por las 200 semillas del modelo1, y el 70 por las 70 del modelo2
+modelo_nuevo[ , ranking  :=  200*modelo1$ranking + 40*modelo2$ranking ]   #ATENCION  el 200 es por las 200 semillas del modelo1, y el 40 por las 40 del modelo2
 
 setorder( modelo_nuevo, ranking )
 
